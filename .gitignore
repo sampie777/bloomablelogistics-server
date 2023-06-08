@@ -1,0 +1,10 @@
+/target
+.idea/
+*.iml
+dist/
+yarn-error.log
+node_modules/
+.env
+static/**/style/*.css
+static/**/style/*.css.map
+tmp/
