@@ -3,17 +3,21 @@ import config from "./config";
 import * as path from "path";
 import cookieParser from "cookie-parser";
 import {sanitizeQueryParameter} from "./utils";
+import {Orders} from "./orders/orders";
 
 export namespace Server {
     export const app = express();
-
-    export class HttpError extends Error {
-    }
 
     export const getQueryParameterAsString = <T = string>(request: Request, name: string, fallback: T): T => {
         const rawValue = request.query[name];
         if (rawValue == undefined || typeof (rawValue) != "string") return fallback;
         return sanitizeQueryParameter(String(rawValue)) as T;
+    }
+
+    export const getQueryParameterAsBoolean = (request: Request, name: string, fallback: boolean = false): boolean => {
+        const rawValue = request.query[name];
+        if (rawValue == undefined || typeof (rawValue) != "string") return fallback;
+        return sanitizeQueryParameter(String(rawValue)).toLowerCase() == "true";
     }
 
     export const getQueryParameterAsNumber = <T = number>(request: Request, name: string, fallback: T): T => {
@@ -45,6 +49,18 @@ export namespace Server {
         // Routing
         app.get("/api/v1/health", (request, response) => {
             response.send("OK");
+        })
+
+        app.get("/api/v1/orders", (request, response, next) => {
+            Orders.list()
+                .then(orders => response.json(orders))
+                .catch(e => next(e))
+        })
+        app.get("/api/v1/orders/check", (request, response, next) => {
+            const markAsRead = getQueryParameterAsBoolean(request, "markAsRead", true)
+            Orders.check(undefined, markAsRead)
+                .then(orders => response.json(orders))
+                .catch(e => next(e))
         })
 
         app.use(errorHandler)
