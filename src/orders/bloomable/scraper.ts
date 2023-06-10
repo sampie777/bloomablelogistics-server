@@ -3,37 +3,38 @@ import server from "./server";
 import {ServerHtml} from "./html";
 import config from "../../config";
 import {emptyPromiseWithValue} from "../../utils";
+import {Auth} from "../../auth";
 
 export namespace BloomableScraper {
     let fetchedOrders: Order[] = [];
 
-    export const fetchAll = (): Promise<Order[]> => {
+    export const fetchAll = (credentials: Auth.Credentials): Promise<Order[]> => {
         fetchedOrders = [];
-        return sequentiallyFetchAll();
+        return sequentiallyFetchAll(credentials);
     };
 
-    const sequentiallyFetchAll = (page: number = 1): Promise<Order[]> => {
-        return fetchPage(page)
+    const sequentiallyFetchAll = (credentials: Auth.Credentials, page: number = 1): Promise<Order[]> => {
+        return fetchPage(credentials, page)
             .then((orders: Order[]) => {
                 fetchedOrders = fetchedOrders.concat(orders);
 
                 const hasNext = page < config.bloomable.maxOrderPagesToFetch;
                 if (hasNext) {
-                    return sequentiallyFetchAll(page + 1);
+                    return sequentiallyFetchAll(credentials, page + 1);
                 }
 
                 return fetchedOrders;
             });
     };
 
-    export const fetchPage = (page: number = 1): Promise<Order[]> => {
-        return server.getOrdersPage(page)
+    export const fetchPage = (credentials: Auth.Credentials, page: number = 1): Promise<Order[]> => {
+        return server.getOrdersPage(credentials, page)
             .then((html: string) => {
                 return ServerHtml.ordersResponseToOrders(html);
             });
     };
 
-    export const fetchDetailsForOrders = (orders: Order[]): Promise<Order[]> => {
+    export const fetchDetailsForOrders = (credentials: Auth.Credentials, orders: Order[]): Promise<Order[]> => {
         if (orders.length === 0) {
             return emptyPromiseWithValue(orders);
         }
@@ -43,15 +44,15 @@ export namespace BloomableScraper {
             return emptyPromiseWithValue(orders);
         }
 
-        return fetchDetailsForOrder(nextOrder)
+        return fetchDetailsForOrder(credentials, nextOrder)
             .then((order) => {
                 orders = orders.filter(it => it !== nextOrder);
                 orders.push(order);
-                return fetchDetailsForOrders(orders);
+                return fetchDetailsForOrders(credentials, orders);
             });
     };
 
-    export const fetchDetailsForOrder = (order: Order): Promise<Order> => {
+    export const fetchDetailsForOrder = (credentials: Auth.Credentials, order: Order): Promise<Order> => {
         if (!order.id) {
             return emptyPromiseWithValue(order);
         }
@@ -59,7 +60,7 @@ export namespace BloomableScraper {
             return emptyPromiseWithValue(order);
         }
 
-        return server.getOrderDetailsPage(order.id)
+        return server.getOrderDetailsPage(credentials, order.id)
             .then((html: string) => {
                 const {recipient, orderValue, products} = ServerHtml.orderDetailsResponseToOrderDetails(html, order.id);
                 const updatedOrder = Order.clone(order);

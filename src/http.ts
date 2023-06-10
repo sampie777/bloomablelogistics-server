@@ -3,9 +3,10 @@ import {Response} from "node-fetch";
 export const HttpCode = {
     OK: 200,
     Created: 201,
-    NotFound: 404,
+    BadRequest: 400,
     Unauthorized: 401,
     Forbidden: 403,
+    NotFound: 404,
     Gone: 410,
     FailedDependency: 424,
     TooManyRequests: 429,

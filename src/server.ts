@@ -4,6 +4,9 @@ import * as path from "path";
 import cookieParser from "cookie-parser";
 import {sanitizeQueryParameter} from "./utils";
 import {Orders} from "./orders/orders";
+import {Auth} from "./auth";
+import {HttpCode} from "./http";
+import {Validation} from "./validation";
 
 export namespace Server {
     export const app = express();
@@ -33,6 +36,14 @@ export namespace Server {
 
     const errorHandler = (error: Error, request: Request, response: Response, next: NextFunction) => {
         console.error("We got an error!", error);
+
+        if (error instanceof Auth.AuthError) {
+            return response.status(HttpCode.Unauthorized).send("Unauthorized")
+        }
+        if (error instanceof Validation.ValidationError) {
+            return response.status(HttpCode.BadRequest).send("BadRequest")
+        }
+
         next(error)
     };
 
@@ -52,13 +63,15 @@ export namespace Server {
         })
 
         app.get("/api/v1/orders", (request, response, next) => {
-            Orders.list()
+            const credentials = Auth.getTokenAndUsername(request)
+            Orders.list(credentials)
                 .then(orders => response.json(orders))
                 .catch(e => next(e))
         })
         app.get("/api/v1/orders/check", (request, response, next) => {
+            const credentials = Auth.getTokenAndUsername(request)
             const markAsRead = getQueryParameterAsBoolean(request, "markAsRead", true)
-            Orders.check(undefined, markAsRead)
+            Orders.check(credentials, markAsRead)
                 .then(orders => response.json(orders))
                 .catch(e => next(e))
         })

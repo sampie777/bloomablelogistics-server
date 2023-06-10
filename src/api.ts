@@ -29,14 +29,14 @@ export const throwErrorsIfNotOk = (response: Response) => {
 
 export const api = {
     bloomable: {
-        orders: (page: number) => fetch(`https://www.bloomable.co.za/Code/Orders/Dashboard?SortByField=DeliveryDate&SortByDirection=DESC&page=${page}`, {
+        orders: (token: string, page: number) => fetch(`https://www.bloomable.co.za/Code/Orders/Dashboard?SortByField=DeliveryDate&SortByDirection=DESC&page=${page}`, {
             headers: {
-                "Cookie": `SAFlorist=${config.bloomable.client1.cookie}`
+                "Cookie": `SAFlorist=${token}`
             }
         }),
-        orderDetail: (id: string) => fetch(`https://www.bloomable.co.za/Code/Orders/Summary?orderId=${id}`, {
+        orderDetail: (token: string, id: string) => fetch(`https://www.bloomable.co.za/Code/Orders/Summary?orderId=${id}`, {
             headers: {
-                "Cookie": `SAFlorist=${config.bloomable.client1.cookie}`
+                "Cookie": `SAFlorist=${token}`
             }
         }),
     },

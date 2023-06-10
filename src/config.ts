@@ -4,10 +4,13 @@ const config = {
     server: {
         port: process.env.NODE_ENV == "production" ? 80 : 3000,
     },
+    auth: {
+        tokenCookieName: "SAFlorist",
+        usernameCookieName: "username",
+    },
     bloomable: {
-        client1: {
-            username: Secrets.read("BLOOMABLE_CLIENT1_USERNAME") ?? "demo",
-            cookie: Secrets.read("BLOOMABLE_CLIENT1_COOKIE") ?? "demo",
+        auth: {
+            tokenCookieName: "SAFlorist",
         },
         maxOrderPagesToFetch: 3,
     },
