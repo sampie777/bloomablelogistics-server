@@ -30,8 +30,9 @@ export namespace Orders {
 
                 const newerOrders = orders.filter(it => it.number! > latestOrder.get(credentials.username)!.number!);
 
-                if (markAsRead) {
+                if (markAsRead && newerOrders.length > 0) {
                     latestOrder.set(credentials.username, newLatestOrder);
+                    console.info(`Latest order for '${credentials.username}' will be set to`, newLatestOrder);
                 }
 
                 return newerOrders;
@@ -43,11 +44,15 @@ export namespace Orders {
             .then(orders => orders.filter(it => !it.accepted))  // Only get non-accepted orders
             .then(orders => {
                 if (orders.length === 0) return orders;
+                console.debug(`New non accepted orders for ${credentials.username}:`, orders)
+
                 if (!sendNotification) return orders;
 
+                const message = `${orders.length} new ${plural("order", orders.length)} received.\n` +
+                    `${plural("Order", orders.length)}: ${orders.map(it => it.number).join(", ")}`;
                 return AppClient.sendNotification(credentials.username,
                     `New ${plural("order", orders.length)}`,
-                    `${orders.length} new ${plural("order", orders.length)} received.`)
+                    message)
                     .then(() => orders)
             })
     }
