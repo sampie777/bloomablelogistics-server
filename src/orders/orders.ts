@@ -16,6 +16,7 @@ export namespace Orders {
         return list(credentials)
             .then(orders => orders.filter(it => it.number !== undefined && !it.deleted))
             .then(orders => {
+                console.debug(`${orders.length} orders found for ${credentials.username}`);
                 if (orders.length === 0) return [];
 
                 const newLatestOrder = orders[0];
