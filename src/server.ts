@@ -93,6 +93,7 @@ export namespace Server {
 
         app.get("/api/v1/orders", (request, response, next) => {
             const credentials = Auth.getTokenAndUsername(request)
+
             Orders.list(credentials)
                 .then(orders => response.json(orders))
                 .catch(e => next(e))
@@ -100,7 +101,9 @@ export namespace Server {
         app.get("/api/v1/orders/check", (request, response, next) => {
             const credentials = Auth.getTokenAndUsername(request)
             const markAsRead = getQueryParameterAsBoolean(request, "markAsRead", true)
-            Orders.check(credentials, markAsRead)
+            const sendNotification = getQueryParameterAsBoolean(request, "sendNotification", true)
+
+            Orders.check(credentials, markAsRead, sendNotification)
                 .then(orders => response.json(orders))
                 .catch(e => next(e))
         })
