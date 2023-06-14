@@ -61,6 +61,35 @@ export namespace Server {
         app.get("/api/v1/health", (request, response) => {
             response.send("OK");
         })
+        app.all("/api/v1/echo", (request, response) => {
+            let credentials;
+            try {
+                credentials = Auth.getTokenAndUsername(request)
+            } catch (e: any) {
+                if (e instanceof Auth.AuthError) {
+                } else if (e instanceof Validation.ValidationError) {
+                } else {
+                    throw e
+                }
+            }
+
+            response.json({
+                date: new Date(),
+                credentials: credentials,
+                request: {
+                    ...request,
+                    app: undefined,
+                    res: undefined,
+                    next: undefined,
+                    body: undefined,
+                    query: undefined,
+                    client: undefined,
+                    socket: undefined,
+                    _events: undefined,
+                    _readableState: undefined,
+                },
+            });
+        })
 
         app.get("/api/v1/orders", (request, response, next) => {
             const credentials = Auth.getTokenAndUsername(request)
