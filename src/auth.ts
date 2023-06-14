@@ -12,17 +12,20 @@ export namespace Auth {
         username: string
     }
 
-    export const getTokenAndUsername = (request: Request): Credentials => {
-        const token = request.cookies[config.auth.tokenCookieName]?.trim()
+    export const getTokenAndUsername = (request: Request, validate = true): Credentials => {
+        return {
+            token: getToken(request, validate),
+            username: getUsername(request, validate),
+        }
+    }
+
+    export const getToken = (request: Request, validate = true): string => {
+        const token = request.cookies?.[config.auth.tokenCookieName]?.trim()
+        if (!validate) return token;
+
         if (!token) {
             console.error(`Missing authentication cookie '${config.auth.tokenCookieName}'`)
             throw new AuthError(`Missing authentication cookie '${config.auth.tokenCookieName}'`);
-        }
-
-        const username = request.cookies[config.auth.usernameCookieName]?.trim()
-        if (!username) {
-            console.error(`Missing authentication cookie '${config.auth.usernameCookieName}'`)
-            throw new AuthError(`Missing authentication cookie '${config.auth.usernameCookieName}'`);
         }
 
         try {
@@ -32,17 +35,26 @@ export namespace Auth {
             throw e;
         }
 
+        return token
+    }
+
+    export const getUsername = (request: Request, validate = true): string => {
+        const username = request.cookies?.[config.auth.usernameCookieName]?.trim()
+        if (!validate) return username;
+
+        if (!username) {
+            console.error(`Missing authentication cookie '${config.auth.usernameCookieName}'`)
+            throw new AuthError(`Missing authentication cookie '${config.auth.usernameCookieName}'`);
+        }
+
         try {
             verifyUsername(username)
         } catch (e) {
-            console.error("Username is not valid", token)
+            console.error("Username is not valid", username)
             throw e;
         }
 
-        return {
-            token: token,
-            username: username
-        }
+        return username
     }
 
     const verifyToken = (value: string) => {

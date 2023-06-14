@@ -49,29 +49,24 @@ export namespace Server {
 
     export const setup = () => {
         // Middleware
-        app.use((request, response, next) => {
-            console.log(`${(new Date()).toISOString()} - [REQUEST] ${request.method} - ${request.ip} -> ${request.hostname}${request.url}`)
-            next();
-        })
         app.use(express.json()) // for parsing application/json
         app.use(express.urlencoded({extended: true})) // for parsing application/x-www-form-urlencoded
         app.use(cookieParser())
+        app.use((request, response, next) => {
+            const username = Auth.getUsername(request, false)
+            const from = `${request.ip}${username ? ` (user=${username})` : ''}`;
+            const to = `${request.hostname}${request.url}`;
+
+            console.log(`${(new Date()).toISOString()} [REQUEST] ${request.method} - ${from} -> ${to}`)
+            next();
+        })
 
         // Routing
         app.get("/api/v1/health", (request, response) => {
             response.send("OK");
         })
         app.all("/api/v1/echo", (request, response) => {
-            let credentials;
-            try {
-                credentials = Auth.getTokenAndUsername(request)
-            } catch (e: any) {
-                if (e instanceof Auth.AuthError) {
-                } else if (e instanceof Validation.ValidationError) {
-                } else {
-                    throw e
-                }
-            }
+            const credentials = Auth.getTokenAndUsername(request, false)
 
             response.json({
                 date: new Date(),
