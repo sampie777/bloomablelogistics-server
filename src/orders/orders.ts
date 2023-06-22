@@ -1,7 +1,7 @@
 import {BloomableScraper} from "../bloomable/scraper";
 import {Order} from "../bloomable/models";
 import {AppClient} from "../appClient";
-import {plural} from "../utils";
+import {formatDateToWords, plural, unique} from "../utils";
 import {Auth} from "../auth";
 
 export namespace Orders {
@@ -59,7 +59,28 @@ export namespace Orders {
         if (orders.length === 0) {
             return "No new orders received.";
         }
-        return `${orders.length} new ${plural("order", orders.length)} received.\n` +
-            `${plural("Order", orders.length)}: ${orders.map(it => it.number).join(", ")}`;
+
+        const orderDates = orders
+            .sort((a, b) => {
+                if (a.deliverAtDate && b.deliverAtDate) {
+                    return a.deliverAtDate.getTime() - b.deliverAtDate.getTime();
+                } else if (a.deliverAtDate) {
+                    return 1;
+                } else if (b.deliverAtDate) {
+                    return -1;
+                } else {
+                    return (a.number || 0) - (b.number || 0);
+                }
+            })
+            .map(it => formatDateToWords(it.deliverAtDate, "%dddd (%dd-%mm-%YYYY)"))
+            .filter(unique)
+        let ordersDate = orderDates[0];
+        if (orderDates.length > 1) {
+            ordersDate += " and later"
+        }
+
+        return `${orders.length} new ${plural("order", orders.length)} received ` +
+            `for ${ordersDate}.\n` +
+            `${plural("Order", orders.length)}: ${orders.map(it => it.number).join(", ")}.`;
     }
 }
