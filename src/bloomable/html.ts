@@ -1,8 +1,8 @@
 import {decode} from "html-entities";
 import {Order, Product, ProductExtra, Recipient} from "./models";
 import {HtmlUtils} from "./htmlUtils";
-import {rollbar} from "../../rollbar";
-import {Auth} from "../../auth";
+import {rollbar} from "../rollbar";
+import {Auth} from "../auth";
 
 export namespace ServerHtml {
     export const loginResponseToError = (html: string): string => {

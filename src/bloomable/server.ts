@@ -1,6 +1,6 @@
-import {rollbar} from "../../rollbar";
-import {api, throwErrorsIfNotOk} from "../../api";
-import {Auth} from "../../auth";
+import {rollbar} from "../rollbar";
+import {api, throwErrorsIfNotOk} from "../api";
+import {Auth} from "../auth";
 import {ServerHtml} from "./html";
 
 class Server {

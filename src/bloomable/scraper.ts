@@ -1,9 +1,9 @@
 import {Order} from "./models";
 import server from "./server";
 import {ServerHtml} from "./html";
-import config from "../../config";
-import {emptyPromiseWithValue} from "../../utils";
-import {Auth} from "../../auth";
+import config from "../config";
+import {emptyPromiseWithValue} from "../utils";
+import {Auth} from "../auth";
 
 export namespace BloomableScraper {
     let fetchedOrders: Order[] = [];

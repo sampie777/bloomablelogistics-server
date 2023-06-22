@@ -1,5 +1,5 @@
-import {BloomableScraper} from "./bloomable/scraper";
-import {Order} from "./bloomable/models";
+import {BloomableScraper} from "../bloomable/scraper";
+import {Order} from "../bloomable/models";
 import {AppClient} from "../appClient";
 import {plural} from "../utils";
 import {Auth} from "../auth";
@@ -48,12 +48,18 @@ export namespace Orders {
 
                 if (!sendNotification) return orders;
 
-                const message = `${orders.length} new ${plural("order", orders.length)} received.\n` +
-                    `${plural("Order", orders.length)}: ${orders.map(it => it.number).join(", ")}`;
                 return AppClient.sendNotification(credentials.username,
                     `New ${plural("order", orders.length)}`,
-                    message)
+                    createNewOrdersMessage(orders))
                     .then(() => orders)
             })
+    }
+
+    export const createNewOrdersMessage = (orders: Order[]): string => {
+        if (orders.length === 0) {
+            return "No new orders received.";
+        }
+        return `${orders.length} new ${plural("order", orders.length)} received.\n` +
+            `${plural("Order", orders.length)}: ${orders.map(it => it.number).join(", ")}`;
     }
 }
