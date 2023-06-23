@@ -10,6 +10,6 @@ describe("utils", () => {
 
   it("converts date to format", () => {
     expect(format(new Date(Date.UTC(2017, 0, 2)), "%dd-%mm-%YYYY")).toBe("02-01-2017");
-    expect(format(new Date(Date.UTC(2017, 0, 2)), "%dddd")).toBe("monday");
+    expect(format(new Date(Date.UTC(2017, 0, 2)), "%dddd")).toBe("Monday");
   });
 });

@@ -25,7 +25,7 @@ export function format(date: Date | string | undefined, _format: string) {
 
     date = dateFrom(date);
 
-    const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     return _format
         .replace(/%dddd/g, days[date.getUTCDay()])
         .replace(/%dd/g, date.getUTCDate().toString().padStart(2, "0"))
