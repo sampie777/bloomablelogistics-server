@@ -57,6 +57,8 @@ export const formatDateToWords = (date: Date | string | undefined, defaultFormat
         return "tomorrow";
     } else if (isYesterday(now, date)) {
         return "yesterday";
+    } else if (isWithinNextWeek(now, date)) {
+        return format(date, "%dddd")
     }
     return format(date, defaultFormat);
 };
@@ -71,6 +73,15 @@ export const isTomorrow = (ref: Date, date: Date): boolean => {
 
 export const isYesterday = (ref: Date, date: Date): boolean => {
     return isToday(new Date(ref.getTime() - 24 * 60 * 60 * 1000), date);
+};
+
+export const isWithinNextWeek = (ref: Date, date: Date): boolean => {
+    const nextWeekLimit = new Date(ref.getTime() + 7 * 24 * 60 * 60 * 1000);
+    nextWeekLimit.setHours(0);
+    nextWeekLimit.setMinutes(0);
+    nextWeekLimit.setSeconds(0);
+
+    return ref.getTime() <= date.getTime() && date.getTime() < nextWeekLimit.getTime();
 };
 
 export const isUpcomingWeek = (ref: Date, date: Date): boolean => {
