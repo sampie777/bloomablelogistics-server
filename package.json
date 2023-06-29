@@ -1,6 +1,6 @@
 {
   "name": "bloomablelogistics-server",
-  "version": "1.2.0-SNAPSHOT",
+  "version": "1.1.2",
   "main": "dist/app.js",
   "repository": "git@github.com:sampie777/bloomablelogistics-server.git",
   "author": "S. Jansen",
