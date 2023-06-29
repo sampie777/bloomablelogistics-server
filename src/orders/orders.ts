@@ -16,10 +16,6 @@ export namespace Orders {
 
     export const newerOrders = (credentials: Auth.Credentials, markAsRead = true): Promise<Order[]> => {
         return list(credentials)
-            .then(orders => {
-                console.log(orders);
-                return orders
-            })
             .then(orders => orders.filter(it => it.number !== undefined && !it.deleted))
             .then(orders => {
                 console.debug(`${orders.length} orders found for ${credentials.username}`);
