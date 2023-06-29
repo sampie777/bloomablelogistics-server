@@ -76,18 +76,5 @@ export namespace BloomableScraper {
     export const sort = (orders: Order[]): Order[] =>
         orders
             .sort((a, b) => (a.number || 0) - (b.number || 0))
-            // .sort((a, b) => (b.delivered ? 1 : -1) - (a.delivered ? 1 : -1))
-            // .sort((a, b) => (b.deleted ? 1 : -1) - (a.deleted ? 1 : -1))
-            // .sort((a, b) => {
-            //     if (a.deliverAtDate && b.deliverAtDate) {
-            //         return a.deliverAtDate.getTime() - b.deliverAtDate.getTime();
-            //     } else if (a.deliverAtDate) {
-            //         return 1;
-            //     } else if (b.deliverAtDate) {
-            //         return -1;
-            //     } else {
-            //         return (a.number || 0) - (b.number || 0);
-            //     }
-            // })
             .reverse();
 }
