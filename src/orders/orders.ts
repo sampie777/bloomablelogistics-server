@@ -5,7 +5,9 @@ import {formatDateToWords, plural, unique} from "../utils";
 import {Auth} from "../auth";
 
 export namespace Orders {
-    let latestOrder: Map<string, Order> = new Map();
+    let knownOrderNumbers: Map<string, number[]> = new Map();
+
+    export const resetKnownOrders = (username: string) => knownOrderNumbers.delete(username)
 
     export const list = (credentials: Auth.Credentials): Promise<Order[]> => {
         return BloomableScraper.fetchPage(credentials)
@@ -14,28 +16,37 @@ export namespace Orders {
 
     export const newerOrders = (credentials: Auth.Credentials, markAsRead = true): Promise<Order[]> => {
         return list(credentials)
+            .then(orders => {
+                console.log(orders);
+                return orders
+            })
             .then(orders => orders.filter(it => it.number !== undefined && !it.deleted))
             .then(orders => {
                 console.debug(`${orders.length} orders found for ${credentials.username}`);
                 if (orders.length === 0) return [];
 
-                const newLatestOrder = orders[0];
+                const newLatestOrderNumbers = orders.map(it => it.number!);
 
-                if (!latestOrder.has(credentials.username)) {
-                    console.info(`Latest order for '${credentials.username}' not set. Will be set to`, newLatestOrder);
-                    latestOrder.set(credentials.username, newLatestOrder);
-                    console.info(`Currently tracking latest order for ${latestOrder.size} usernames:`, Array.from(latestOrder.keys()))
+                if (!knownOrderNumbers.has(credentials.username)) {
+                    console.info(`Latest order numbers for '${credentials.username}' not set. Will be set to`, newLatestOrderNumbers);
+                    knownOrderNumbers.set(credentials.username, newLatestOrderNumbers);
+                    console.info(`Currently tracking latest order for ${knownOrderNumbers.size} usernames:`, Array.from(knownOrderNumbers.keys()))
                     return [];
                 }
 
-                const newerOrders = orders.filter(it => it.number! > latestOrder.get(credentials.username)!.number!);
+                const knownOrderNumbersForUser = knownOrderNumbers.get(credentials.username)!;
+                const oldestKnownOrderNumber = knownOrderNumbersForUser.length === 0 ? 0 : knownOrderNumbersForUser[knownOrderNumbersForUser.length - 1];
+                // Search for orders that aren't in our known list, and also are newer than the oldest order we know of.
+                // This last because if a known order is deleted, the new orders list will contain an old order number which
+                // comes from the second order page.
+                const newOrders = orders.filter(it => it.number! > oldestKnownOrderNumber && !knownOrderNumbersForUser.includes(it.number!));
 
-                if (markAsRead && newerOrders.length > 0) {
-                    latestOrder.set(credentials.username, newLatestOrder);
-                    console.info(`Latest order for '${credentials.username}' will be set to`, newLatestOrder);
+                if (markAsRead && newOrders.length > 0) {
+                    knownOrderNumbers.set(credentials.username, newLatestOrderNumbers);
+                    console.info(`Latest order numbers for '${credentials.username}' will be set to`, newLatestOrderNumbers);
                 }
 
-                return newerOrders;
+                return newOrders;
             })
     }
 
