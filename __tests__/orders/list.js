@@ -9,7 +9,7 @@ describe("orders list", () => {
     BloomableScraper.fetchPage.mockImplementation(() => Promise.resolve([new Order()]))
 
     it("lists orders", () => {
-        return Orders.list({username: "username", token: "token"})
+        return Orders.list({username: "username", password: "password"})
             .then((orders) => {
                 expect(orders.length).toBe(1)
             })

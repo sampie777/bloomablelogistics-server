@@ -1,0 +1,323 @@
+{
+  "data": {
+    "id": 586,
+    "title": "Large (As Shown) \/ Yes",
+    "product": {
+      "id": 207,
+      "title": "Pastel Elegance",
+      "slug": "pastel-elegance",
+      "description": "<meta charset=\"utf-8\">\n<p><b>When mixed pastel flowers come together like this the world seems is a better place. \u00a0<\/b><b>A wildly sophisticated array of pale pink roses and lilies with modern greens, alstroemeria and pink snapdragons will show them your love.<\/b><\/p>\n<p><span>Flowers included in this beautiful creation may differ subject to seasonal and flower market availability. Our team will inform you if there are any major changes but we will do our best to ensure that it looks like what you see on our website. Thank you for supporting local South African florists in our beautiful country. #SupportLocal<\/span><\/p>",
+      "images": [
+        {
+          "id": 203,
+          "altText": null,
+          "height": 600,
+          "width": 450,
+          "url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0686\/5315\/4621\/products\/545a9d65-e979-4b59-92d8-8a52ce1e6479.jpg?v=1687278404"
+        }
+      ],
+      "variants": [
+        {
+          "id": 585,
+          "title": "Large (As Shown) \/ No",
+          "sku": "0202L"
+        },
+        {
+          "id": 586,
+          "title": "Large (As Shown) \/ Yes",
+          "sku": "0202L-V"
+        }
+      ]
+    },
+    "component_rates": [
+      {
+        "id": 3812,
+        "quantity": 1,
+        "component_rate": {
+          "id": 218,
+          "component": {
+            "id": 250,
+            "name": "29CM Glass Vase",
+            "slug": "29cm-glass-vase",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 38,
+              "name": "1 Large"
+            },
+            "colour": {
+              "id": 2,
+              "name": "Clear"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 3813,
+        "quantity": 1,
+        "component_rate": {
+          "id": 213,
+          "component": {
+            "id": 269,
+            "name": "Additional Delivery fee",
+            "slug": "additional-delivery-fee",
+            "container": false,
+            "exclude_auto_calculations": true,
+            "show_on_menu": true,
+            "unit": {
+              "id": 6,
+              "name": "1 Single"
+            },
+            "colour": {
+              "id": 2,
+              "name": "Clear"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 3814,
+        "quantity": 5,
+        "component_rate": {
+          "id": 54,
+          "component": {
+            "id": 5,
+            "name": "Pink Alstroemeria",
+            "slug": "pink-alstroemeria",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 8,
+              "name": "Pink"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 3815,
+        "quantity": 5,
+        "component_rate": {
+          "id": 31,
+          "component": {
+            "id": 34,
+            "name": "Cream Carnations",
+            "slug": "cream-carnations",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 9,
+              "name": "Cream"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 3816,
+        "quantity": 8,
+        "component_rate": {
+          "id": 116,
+          "component": {
+            "id": 84,
+            "name": "Greenery",
+            "slug": "greenery",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 23,
+              "name": "Green"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 3817,
+        "quantity": 1,
+        "component_rate": {
+          "id": 127,
+          "component": {
+            "id": 95,
+            "name": "Kraft Paper",
+            "slug": "kraft-paper",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 17,
+              "name": "Brown"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 3818,
+        "quantity": 7,
+        "component_rate": {
+          "id": 194,
+          "component": {
+            "id": 162,
+            "name": "Pennygums",
+            "slug": "pennygums",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 23,
+              "name": "Green"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 3819,
+        "quantity": 11,
+        "component_rate": {
+          "id": 9,
+          "component": {
+            "id": 196,
+            "name": "Light Pink Roses",
+            "slug": "light-pink-roses",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 15,
+              "name": "Light Pink"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 3820,
+        "quantity": 6,
+        "component_rate": {
+          "id": 22,
+          "component": {
+            "id": 212,
+            "name": "Pink Snapdragons",
+            "slug": "pink-snapdragons",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 8,
+              "name": "Pink"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 3821,
+        "quantity": 6,
+        "component_rate": {
+          "id": 18,
+          "component": {
+            "id": 225,
+            "name": "Pink Statice",
+            "slug": "pink-statice",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 1,
+              "name": "pink"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 3822,
+        "quantity": 4,
+        "component_rate": {
+          "id": 386,
+          "component": {
+            "id": 334,
+            "name": "Lilac Stocks",
+            "slug": "lilac-stocks",
+            "container": false,
+            "exclude_auto_calculations": true,
+            "show_on_menu": true,
+            "unit": {
+              "id": 6,
+              "name": "1 Single"
+            },
+            "colour": {
+              "id": 5,
+              "name": "Lilac"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 3823,
+        "quantity": 1,
+        "component_rate": {
+          "id": 224,
+          "component": {
+            "id": 240,
+            "name": "Twyne",
+            "slug": "twyne",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 17,
+              "name": "Brown"
+            },
+            "hasImage": false
+          }
+        }
+      }
+    ]
+  }
+}

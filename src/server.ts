@@ -53,7 +53,7 @@ export namespace Server {
         app.use(express.urlencoded({extended: true})) // for parsing application/x-www-form-urlencoded
         app.use(cookieParser())
         app.use((request, response, next) => {
-            const username = Auth.getUsername(request, false)
+            const username = Auth.getBasicAuth(request, false).username
             const from = `${request.ip}${username ? ` (user=${username})` : ''}`;
             const to = `${request.hostname}${request.url}`;
 
@@ -66,7 +66,7 @@ export namespace Server {
             response.send("OK");
         })
         app.all("/api/v1/echo", (request, response) => {
-            const credentials = Auth.getTokenAndUsername(request, false)
+            const credentials = Auth.getBasicAuth(request, false)
 
             response.json({
                 date: new Date(),
@@ -87,14 +87,14 @@ export namespace Server {
         })
 
         app.get("/api/v1/orders", (request, response, next) => {
-            const credentials = Auth.getTokenAndUsername(request)
+            const credentials = Auth.getBasicAuth(request)
 
             Orders.list(credentials)
                 .then(orders => response.json(orders))
                 .catch(e => next(e))
         })
         app.get("/api/v1/orders/check", (request, response, next) => {
-            const credentials = Auth.getTokenAndUsername(request)
+            const credentials = Auth.getBasicAuth(request)
             const markAsRead = getQueryParameterAsBoolean(request, "markAsRead", true)
             const sendNotification = getQueryParameterAsBoolean(request, "sendNotification", true)
 

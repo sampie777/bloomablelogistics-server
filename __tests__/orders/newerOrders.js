@@ -30,23 +30,23 @@ describe("orders get newest orders", () => {
         BloomableScraper.fetchPage.mockImplementationOnce(() => Promise.resolve([order1, order2]))
         BloomableScraper.fetchPage.mockImplementationOnce(() => Promise.resolve([order1, order2, order3]))
         BloomableScraper.fetchPage.mockImplementationOnce(() => Promise.resolve([order2, order3]))
-        return Orders.newerOrders({username: username, token: ""}, true)
+        return Orders.newerOrders({username: username, password: ""}, true)
             .then(result => expect(result.length).toBe(0))
-            .then(() => Orders.newerOrders({username: username, token: ""}, true))
+            .then(() => Orders.newerOrders({username: username, password: ""}, true))
             .then(result => {
                 expect(result.length).toBe(1)
                 expect(result[0].number).toBe(3)
             })
-            .then(() => Orders.newerOrders({username: username, token: ""}, true))
+            .then(() => Orders.newerOrders({username: username, password: ""}, true))
             .then(result => expect(result.length).toBe(0))
     })
 
     it("sees newer orders even if order numbers are not greater than previously known numbers", () => {
         BloomableScraper.fetchPage.mockImplementationOnce(() => Promise.resolve([order1, order3]))
         BloomableScraper.fetchPage.mockImplementationOnce(() => Promise.resolve([order1, order2, order3, order4]))
-        return Orders.newerOrders({username: username, token: ""}, true)
+        return Orders.newerOrders({username: username, password: ""}, true)
             .then(result => expect(result.length).toBe(0))
-            .then(() => Orders.newerOrders({username: username, token: ""}, true))
+            .then(() => Orders.newerOrders({username: username, password: ""}, true))
             .then(result => {
                 console.log(result)
                 expect(result.length).toBe(2)
@@ -58,9 +58,9 @@ describe("orders get newest orders", () => {
     it("dismisses new order numbers smaller than smallest known number", () => {
         BloomableScraper.fetchPage.mockImplementationOnce(() => Promise.resolve([order2, order3]))
         BloomableScraper.fetchPage.mockImplementationOnce(() => Promise.resolve([order1, order2, order3, order4]))
-        return Orders.newerOrders({username: username, token: ""}, true)
+        return Orders.newerOrders({username: username, password: ""}, true)
             .then(result => expect(result.length).toBe(0))
-            .then(() => Orders.newerOrders({username: username, token: ""}, true))
+            .then(() => Orders.newerOrders({username: username, password: ""}, true))
             .then(result => {
                 console.log(result)
                 expect(result.length).toBe(1)

@@ -28,18 +28,6 @@ export const throwErrorsIfNotOk = (response: Response) => {
 };
 
 export const api = {
-    bloomable: {
-        orders: (token: string, page: number) => fetch(`https://www.bloomable.co.za/Code/Orders/Dashboard?SortByField=DeliveryDate&SortByDirection=DESC&page=${page}`, {
-            headers: {
-                "Cookie": `SAFlorist=${token}`
-            }
-        }),
-        orderDetail: (token: string, id: string) => fetch(`https://www.bloomable.co.za/Code/Orders/Summary?orderId=${id}`, {
-            headers: {
-                "Cookie": `SAFlorist=${token}`
-            }
-        }),
-    },
     fcm: {  // Firebase Cloud Messaging
         notification: {
             send: (data: {

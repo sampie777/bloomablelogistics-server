@@ -1,17 +1,22 @@
-import {BloomableScraper} from "../bloomable/scraper";
 import {Order} from "../bloomable/models";
 import {AppClient} from "../appClient";
 import {formatDateToWords, plural, unique} from "../utils";
 import {Auth} from "../auth";
+import {BloomableWebsite} from "../bloomable/BloomableWebsite";
 
 export namespace Orders {
     let knownOrderNumbers: Map<string, number[]> = new Map();
 
-    export const resetKnownOrders = (username: string) => knownOrderNumbers.delete(username)
+    export const resetKnownOrders = (username: string) => knownOrderNumbers.delete(username);
+
+    export const sort = (orders: Order[]): Order[] =>
+        orders
+            .sort((a, b) => (a.number || 0) - (b.number || 0))
+            .reverse();
 
     export const list = (credentials: Auth.Credentials): Promise<Order[]> => {
-        return BloomableScraper.fetchPage(credentials)
-            .then(orders => BloomableScraper.sort(orders))
+        return BloomableWebsite.orders(credentials)
+            .then(orders => sort(orders))
     }
 
     export const newerOrders = (credentials: Auth.Credentials, markAsRead = true): Promise<Order[]> => {
