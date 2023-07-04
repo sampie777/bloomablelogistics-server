@@ -104,8 +104,9 @@ export namespace Server {
         })
 
         app.use(errorHandler)
-        app.listen(config.server.port, () => {
-            console.log(`Server running on :${config.server.port}`);
-        })
     }
+
+    export const start = () => app.listen(config.server.port, () => {
+        console.log(`Server running on :${config.server.port}`);
+    })
 }

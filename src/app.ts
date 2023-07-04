@@ -3,3 +3,4 @@ dotenv.config()
 
 import {Server} from "./server";
 Server.setup();
+Server.start();

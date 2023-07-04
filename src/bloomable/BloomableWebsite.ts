@@ -201,7 +201,7 @@ export namespace BloomableWebsite {
         login(credentials)
             .then(session => {
                 console.log("Getting orders")
-                return fetch("https://dashboard.bloomable.com/api/orders",
+                return fetch("https://dashboard.bloomable.com/api/orders?page=1&s=created_at&d=desc",
                     {
                         headers: {
                             "Accept": "application/json",
