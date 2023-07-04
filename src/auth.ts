@@ -8,14 +8,16 @@ export namespace Auth {
     }
 
     export interface Credentials {
-        token: string
+        token?: string
         username: string
+        password: string
     }
 
     export const getTokenAndUsername = (request: Request, validate = true): Credentials => {
         return {
             token: getToken(request, validate),
             username: getUsername(request, validate),
+            password: "",
         }
     }
 
