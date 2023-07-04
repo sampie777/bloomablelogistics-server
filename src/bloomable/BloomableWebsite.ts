@@ -33,6 +33,67 @@ export namespace BloomableWebsite {
         }
     }
 
+    interface MeResponseCity {
+        id: number,
+        name: string,
+    }
+
+    interface MeResponse {
+        data: {
+            id: number,
+            name: string,
+            email: string,
+            partner: {
+                id: number,
+                name: string,
+                radius: number,
+                address1: string,
+                address2: unknown,
+                address3: unknown,
+                suburb: {
+                    id: number,
+                    name: string,
+                    city: MeResponseCity
+                },
+                city: MeResponseCity,
+                province: {
+                    id: number,
+                    name: string,
+                },
+                country: string,
+                postalCode: string,
+                latitude: number,
+                longitude: number,
+                enabled: boolean,
+                vatNumber: string,
+                partnerType: "Florist" | string,
+                ownerName: string,
+                ownerEmail: string,
+                ownerPhone: string,
+                businessEmail: string,
+                businessPhone: string,
+                rating: number,
+                bankName: unknown,
+                branchCode: unknown,
+                accountName: unknown,
+                accountNumber: unknown,
+                accountType: unknown,
+                avbobSalesChannel: boolean,
+                b2bSalesChannel: boolean,
+                inStoreSalesChannel: boolean,
+                webSalesSalesChannel: boolean,
+            },
+            phoneNumber: string,
+            role: {
+                id: number,
+                name: "Partner" | string,
+                slug: "partner" | string,
+            },
+            isAdmin: boolean,
+            enabled: boolean,
+        }
+    }
+
     const obtainResponseContent = (response: Response): Promise<string> => {
         const contentType = response.headers.get("content-type");
         if (contentType === "application/json") return response.json().catch(e => {
@@ -136,7 +197,6 @@ export namespace BloomableWebsite {
                 throw e
             })
 
-
     export const orders = (credentials: Auth.Credentials): Promise<OrdersResponse> =>
         login(credentials)
             .then(session => {
@@ -161,6 +221,33 @@ export namespace BloomableWebsite {
             })
             .catch(e => {
                 console.error("Could not get orders", e)
+                throw e
+            })
+
+    export const me = (credentials: Auth.Credentials): Promise<MeResponse> =>
+        login(credentials)
+            .then(session => {
+                console.log("Getting me details")
+                return fetch("https://dashboard.bloomable.com/api/me",
+                    {
+                        headers: {
+                            "Accept": "application/json",
+                            "Referer": "https://dashboard.bloomable.com/dashboard",
+                            ...sessionToHeader(session)
+                        }
+                    })
+            })
+            .then(response => {
+                const session = getNewSession(response);
+                console.log("Me status", response.status, session)
+                return response.json()
+            })
+            .then(d => {
+                console.log("Me data", d)
+                return d
+            })
+            .catch(e => {
+                console.error("Could not get me details", e)
                 throw e
             })
 }
