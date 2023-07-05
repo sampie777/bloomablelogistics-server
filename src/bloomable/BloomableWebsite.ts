@@ -310,6 +310,32 @@ export namespace BloomableWebsite {
                 throw e
             })
 
+    export const acceptOrder = (credentials: Auth.Credentials, order: { id: number }): Promise<any> =>
+        login(credentials)
+            .then(session => {
+                console.log("Accepting order")
+                return fetch(`https://dashboard.bloomable.com/api/orders/${order.id}/accept`,
+                    {
+                        headers: {
+                            "Accept": "application/json",
+                            "Referer": "https://dashboard.bloomable.com/dashboard",
+                            ...sessionToHeader(session)
+                        },
+                        method: "POST"
+                    })
+            })
+            .then(response => {
+                const session = getNewSession(response);
+                console.log("Order accept status", response.status, session)
+                if (response.status != 200) {
+                    throw new Error("Failed to accept order")
+                }
+            })
+            .catch(e => {
+                console.error("Could not accept order", e)
+                throw e
+            })
+
     export const me = (credentials: Auth.Credentials): Promise<MeResponse> =>
         login(credentials)
             .then(session => {
