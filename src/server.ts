@@ -7,6 +7,7 @@ import {Orders} from "./orders/orders";
 import {Auth} from "./auth";
 import {HttpCode} from "./http";
 import {Validation} from "./validation";
+import {AppClient} from "./appClient";
 
 export namespace Server {
     export const app = express();
@@ -71,6 +72,7 @@ export namespace Server {
             response.json({
                 date: new Date(),
                 credentials: credentials,
+                fcmTopic: AppClient.convertUsernameToTopicName(credentials.username),
                 request: {
                     ...request,
                     app: undefined,
