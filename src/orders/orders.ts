@@ -2,7 +2,7 @@ import {Order} from "./models";
 import {AppClient} from "../appClient";
 import {formatDateToWords, plural, unique} from "../utils";
 import {Auth} from "../auth";
-import {BloomableApi} from "../bloomable/BloomableApi";
+import {BloomableApi} from "../bloomable/api";
 
 export namespace Orders {
     let knownOrderNumbers: Map<string, number[]> = new Map();

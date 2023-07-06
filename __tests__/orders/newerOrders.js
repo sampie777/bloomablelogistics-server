@@ -1,8 +1,8 @@
 import {Orders} from "../../src/orders/orders";
 import {Order} from "../../src/orders/models";
-import {BloomableApi} from "../../src/bloomable/BloomableApi";
+import {BloomableApi} from "../../src/bloomable/api";
 
-jest.mock("bloomablelogistics-server/src/bloomable/BloomableWebsite");
+jest.mock("bloomablelogistics-server/src/bloomable/api");
 
 describe("orders get newest orders", () => {
     const username = "test";
