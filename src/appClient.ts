@@ -12,6 +12,7 @@ export namespace AppClient {
         }
     }
 
+    // See https://firebase.google.com/docs/cloud-messaging/send-message#send-messages-to-topics-legacy
     export const convertUsernameToTopicName = (value: string): string => {
         return value
             .replace(/[\s\n\r]*/g, "")
