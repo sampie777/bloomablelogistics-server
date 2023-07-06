@@ -1,16 +1,16 @@
 import {Auth} from "../auth";
 import {Order, Product} from "../orders/models";
 import {emptyPromise} from "../utils";
-import {MeResponse, OrdersResponse, ProductResponse} from "./serverModels";
-import {authenticatedFetch} from "./auth";
+import {MeResponse, OrdersResponse, OrderStatus, ProductResponse} from "./serverModels";
 import {convertToLocalOrder, convertToLocalProduct} from "./converter";
+import {BloomableAuth} from "./auth";
 
 export namespace BloomableWebsite {
 
-    export const getOrders = (credentials: Auth.Credentials): Promise<Order[]> => {
+    export const getOrders = (credentials: Auth.Credentials, withStatus: OrderStatus | "all" = "all"): Promise<Order[]> => {
         console.log("Getting orders")
-        return authenticatedFetch(credentials,
-            "https://dashboard.bloomable.com/api/orders?page=1&s=created_at&d=desc",
+        return BloomableAuth.authenticatedFetch(credentials,
+            `https://dashboard.bloomable.com/api/orders?page=1&s=created_at&d=desc${withStatus === "all" ? "" : `&filter=${withStatus}`}`,
             {
                 headers: {
                     "Accept": "application/json",
@@ -27,7 +27,7 @@ export namespace BloomableWebsite {
 
     export const getProduct = (credentials: Auth.Credentials, product: { id: number }): Promise<Product> => {
         console.log("Getting product", {product: product})
-        return authenticatedFetch(credentials,
+        return BloomableAuth.authenticatedFetch(credentials,
             `https://dashboard.bloomable.com/api/product-variants/${product.id}`,
             {
                 headers: {
@@ -45,7 +45,7 @@ export namespace BloomableWebsite {
 
     export const acceptOrder = (credentials: Auth.Credentials, order: { id: number }): Promise<any> => {
         console.log("Accepting order", {order: order})
-        return authenticatedFetch(credentials,
+        return BloomableAuth.authenticatedFetch(credentials,
             `https://dashboard.bloomable.com/api/orders/${order.id}/accept`,
             {
                 headers: {
@@ -68,7 +68,7 @@ export namespace BloomableWebsite {
 
     export const getProfile = (credentials: Auth.Credentials): Promise<MeResponse> => {
         console.log("Getting me details")
-        return authenticatedFetch(credentials,
+        return BloomableAuth.authenticatedFetch(credentials,
             "https://dashboard.bloomable.com/api/me",
             {
                 headers: {

@@ -19,8 +19,13 @@ export namespace Orders {
             .then(orders => sort(orders))
     }
 
+    export const listNew = (credentials: Auth.Credentials): Promise<Order[]> => {
+        return BloomableWebsite.getOrders(credentials, "open")
+            .then(orders => sort(orders))
+    }
+
     export const newerOrders = (credentials: Auth.Credentials, markAsRead = true): Promise<Order[]> => {
-        return list(credentials)
+        return listNew(credentials)
             .then(orders => orders.filter(it => it.number !== undefined && !it.deleted))
             .then(orders => {
                 console.debug(`${orders.length} orders found for ${credentials.username}`);

@@ -1,12 +1,11 @@
 import {Orders} from "../../src/orders/orders";
-import {BloomableScraper} from "../../src/bloomable/scraper";
 import {Order} from "../../src/orders/models";
+import {BloomableWebsite} from "../../src/bloomable/BloomableWebsite";
 
-jest.mock("bloomablelogistics-server/src/bloomable/scraper");
+jest.mock("bloomablelogistics-server/src/bloomable/BloomableWebsite");
 
 describe("orders list", () => {
-    BloomableScraper.sort.mockImplementation((orders) => orders)
-    BloomableScraper.fetchPage.mockImplementation(() => Promise.resolve([new Order()]))
+    BloomableWebsite.getOrders.mockImplementation(() => Promise.resolve([new Order()]))
 
     it("lists orders", () => {
         return Orders.list({username: "username", password: "password"})
