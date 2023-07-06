@@ -1,4 +1,4 @@
-import {Order} from "../bloomable/models";
+import {Order} from "./models";
 import {AppClient} from "../appClient";
 import {formatDateToWords, plural, unique} from "../utils";
 import {Auth} from "../auth";
@@ -15,7 +15,7 @@ export namespace Orders {
             .reverse();
 
     export const list = (credentials: Auth.Credentials): Promise<Order[]> => {
-        return BloomableWebsite.orders(credentials)
+        return BloomableWebsite.getOrders(credentials)
             .then(orders => sort(orders))
     }
 

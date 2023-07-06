@@ -1,6 +1,6 @@
 import {Orders} from "../../src/orders/orders";
 import {BloomableScraper} from "../../src/bloomable/scraper";
-import {Order} from "../../src/bloomable/models";
+import {Order} from "../../src/orders/models";
 
 jest.mock("bloomablelogistics-server/src/bloomable/scraper");
 
