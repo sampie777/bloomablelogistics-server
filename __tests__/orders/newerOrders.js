@@ -1,6 +1,6 @@
 import {Orders} from "../../src/orders/orders";
 import {Order} from "../../src/orders/models";
-import {BloomableWebsite} from "../../src/bloomable/BloomableWebsite";
+import {BloomableApi} from "../../src/bloomable/BloomableApi";
 
 jest.mock("bloomablelogistics-server/src/bloomable/BloomableWebsite");
 
@@ -22,9 +22,9 @@ describe("orders get newest orders", () => {
     })
 
     it("sees newer orders and mark these as read", () => {
-        BloomableWebsite.getOrders.mockImplementationOnce(() => Promise.resolve([order1, order2]))
-        BloomableWebsite.getOrders.mockImplementationOnce(() => Promise.resolve([order1, order2, order3]))
-        BloomableWebsite.getOrders.mockImplementationOnce(() => Promise.resolve([order2, order3]))
+        BloomableApi.getOrders.mockImplementationOnce(() => Promise.resolve([order1, order2]))
+        BloomableApi.getOrders.mockImplementationOnce(() => Promise.resolve([order1, order2, order3]))
+        BloomableApi.getOrders.mockImplementationOnce(() => Promise.resolve([order2, order3]))
         return Orders.newerOrders({username: username, password: ""}, true)
             .then(result => expect(result.length).toBe(0))
             .then(() => Orders.newerOrders({username: username, password: ""}, true))
@@ -37,8 +37,8 @@ describe("orders get newest orders", () => {
     })
 
     it("sees newer orders even if order numbers are not greater than previously known numbers", () => {
-        BloomableWebsite.getOrders.mockImplementationOnce(() => Promise.resolve([order1, order3]))
-        BloomableWebsite.getOrders.mockImplementationOnce(() => Promise.resolve([order1, order2, order3, order4]))
+        BloomableApi.getOrders.mockImplementationOnce(() => Promise.resolve([order1, order3]))
+        BloomableApi.getOrders.mockImplementationOnce(() => Promise.resolve([order1, order2, order3, order4]))
         return Orders.newerOrders({username: username, password: ""}, true)
             .then(result => expect(result.length).toBe(0))
             .then(() => Orders.newerOrders({username: username, password: ""}, true))
@@ -51,8 +51,8 @@ describe("orders get newest orders", () => {
     })
 
     it("dismisses new order numbers smaller than smallest known number", () => {
-        BloomableWebsite.getOrders.mockImplementationOnce(() => Promise.resolve([order2, order3]))
-        BloomableWebsite.getOrders.mockImplementationOnce(() => Promise.resolve([order1, order2, order3, order4]))
+        BloomableApi.getOrders.mockImplementationOnce(() => Promise.resolve([order2, order3]))
+        BloomableApi.getOrders.mockImplementationOnce(() => Promise.resolve([order1, order2, order3, order4]))
         return Orders.newerOrders({username: username, password: ""}, true)
             .then(result => expect(result.length).toBe(0))
             .then(() => Orders.newerOrders({username: username, password: ""}, true))

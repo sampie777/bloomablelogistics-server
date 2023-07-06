@@ -5,7 +5,7 @@ import {MeResponse, OrdersResponse, OrderStatus, ProductResponse} from "./server
 import {convertToLocalOrder, convertToLocalProduct} from "./converter";
 import {BloomableAuth} from "./auth";
 
-export namespace BloomableWebsite {
+export namespace BloomableApi {
 
     export const getOrders = (credentials: Auth.Credentials, withStatus: OrderStatus | "all" = "all"): Promise<Order[]> => {
         console.log("Getting orders")

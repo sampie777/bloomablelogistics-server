@@ -2,7 +2,7 @@ import {Order} from "./models";
 import {AppClient} from "../appClient";
 import {formatDateToWords, plural, unique} from "../utils";
 import {Auth} from "../auth";
-import {BloomableWebsite} from "../bloomable/BloomableWebsite";
+import {BloomableApi} from "../bloomable/BloomableApi";
 
 export namespace Orders {
     let knownOrderNumbers: Map<string, number[]> = new Map();
@@ -15,12 +15,12 @@ export namespace Orders {
             .reverse();
 
     export const list = (credentials: Auth.Credentials): Promise<Order[]> => {
-        return BloomableWebsite.getOrders(credentials)
+        return BloomableApi.getOrders(credentials)
             .then(orders => sort(orders))
     }
 
     export const listNew = (credentials: Auth.Credentials): Promise<Order[]> => {
-        return BloomableWebsite.getOrders(credentials, "open")
+        return BloomableApi.getOrders(credentials, "open")
             .then(orders => sort(orders))
     }
 
