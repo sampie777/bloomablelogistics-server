@@ -1,66 +1,67 @@
 import fetch, {Response} from "node-fetch";
 import {HttpCode} from "../http";
 import {Auth} from "../auth";
-import {Order, Recipient} from "./models";
+import {Order, Product, Recipient} from "./models";
+import {emptyPromise} from "../utils";
 
 export namespace BloomableWebsite {
+
+    type OrderStatus = "open" | "accepted" | "fulfilled" | "delivered" | "cancelled";
 
     interface Session {
         xsrfToken?: string
         sessionToken?: string
     }
 
-    interface Product {
-        "data": {
-            "id": number,
-            "title": string,
-            "product": {
-                "id": number,
-                "title": string,
-                "slug": string,
-                "description": string,
-                "images": Array<{
-                    "id": number,
-                    "altText": null,
-                    "height": number,
-                    "width": number,
-                    "url": string
-                }>,
-                "variants": Array<{
-                    "id": number,
-                    "title": string,
-                    "sku": string,
-                }>
-            },
-            "component_rates": Array<{
-                "id": number,
-                "quantity": number,
-                "component_rate": {
-                    "id": number,
-                    "component": {
-                        "id": number,
-                        "name": string,
-                        "slug": string,
-                        "container": boolean,
-                        "exclude_auto_calculations": boolean,
-                        "show_on_menu": boolean,
-                        "unit": {
-                            "id": number,
-                            "name": string,
-                        },
-                        "colour": {
-                            "id": number,
-                            "name": string,
-                        },
-                        "hasImage": boolean
-                    }
-                }
+    interface BloomableProduct {
+        id: number,
+        title: string,
+        product: {
+            id: number,
+            title: string,
+            slug: string,
+            description: string,
+            images: Array<{
+                id: number,
+                altText: null,
+                height: number,
+                width: number,
+                url: string
+            }>,
+            variants: Array<{
+                id: number,
+                title: string,
+                sku: string,
             }>
-        }
+        },
+        component_rates: Array<{
+            id: number,
+            quantity: number,
+            component_rate: {
+                id: number,
+                component: {
+                    id: number,
+                    name: string,
+                    slug: string,
+                    container: boolean,
+                    exclude_auto_calculations: boolean,
+                    show_on_menu: boolean,
+                    unit: {
+                        id: number,
+                        name: string,
+                    },
+                    colour: {
+                        id: number,
+                        name: string,
+                    },
+                    hasImage: boolean
+                }
+            }
+        }>
     }
 
     interface ProductResponse {
-        "data": Product
+        data: BloomableProduct
     }
 
     interface BloomableOrder {
@@ -80,7 +81,7 @@ export namespace BloomableWebsite {
         lines: Array<{
             id: number,
             title: string,
-            status: "accepted" | string,
+            status: OrderStatus,
             quantity: number,
             giftMessage: string,
             productVariantId: number,
@@ -88,10 +89,10 @@ export namespace BloomableWebsite {
             returns: []
         }>,
         adjustments: [],
-        status: "accepted" | string,
+        status: OrderStatus,
         totalValue: number,
         deliveryFee: string,
-        notes: null,
+        notes: string | null,
         onPay: number,
     }
 
@@ -310,6 +311,33 @@ export namespace BloomableWebsite {
                 throw e
             })
 
+    export const getProduct = (credentials: Auth.Credentials, product: { id: number }): Promise<Product> =>
+        login(credentials)
+            .then(session => {
+                console.log("Getting product")
+                return fetch(`https://dashboard.bloomable.com/api/product-variants/${product.id}`,
+                    {
+                        headers: {
+                            "Accept": "application/json",
+                            "Referer": "https://dashboard.bloomable.com/dashboard",
+                            ...sessionToHeader(session)
+                        }
+                    })
+            })
+            .then(response => {
+                const session = getNewSession(response);
+                console.log("Product status", response.status, session)
+                return response.json() as Promise<ProductResponse>
+            })
+            .then(d => {
+                console.log("Product data", d)
+                return convertToLocalProduct(d.data)
+            })
+            .catch(e => {
+                console.error("Could not get product", e)
+                throw e
+            })
+
     export const acceptOrder = (credentials: Auth.Credentials, order: { id: number }): Promise<any> =>
         login(credentials)
             .then(session => {
@@ -368,13 +396,70 @@ export namespace BloomableWebsite {
             const order = new Order()
             order.id = it.id
             order.number = +it.name.replace(/\D*/gi, "")
-            order.recipient = new Recipient()
-            order.recipient.name = it.firstName + " " + it.lastName
             order.createdAt = new Date(it.created_at);
             order.deliverAtDate = new Date(it.deliveryDate);
-            order.accepted = it.status == "accepted";
-            // order.delivered = it.status == "delivered";
-            // order.deleted = it.status == "deleted";
+            order.orderValue = it.totalValue
+            order.orderCosts = it.onPay
+            order.accepted = it.status != "open" && it.status != "cancelled";
+            order.delivered = it.status == "fulfilled" || it.status == "delivered";
+            order.deleted = it.status == "cancelled";
+
+            order.recipient = new Recipient()
+            order.recipient.name = (it.firstName + " " + it.lastName).trim()
+            order.recipient.phones = [it.phone]
+            order.recipient.address = [it.address1, it.address2, it.city].filter(it => it).join(", ")
+            order.recipient.coordinates = {
+                latitude: it.latitude,
+                longitude: it.longitude
+            }
+            order.recipient.specialInstructions = it.notes ?? undefined
+            order.recipient.message = it.lines.map(product => product.giftMessage)
+                .filter(it => it)
+                .join("\n\n   ---\n\n")
+
+            if (it.adjustments && it.adjustments.length > 0) {
+                console.warn("I don't know what to do with this field: BloomableOrder.adjustments", it.adjustments)
+            }
+
+            order.products = it.lines.map(p => {
+                const product = new Product()
+                product.id = p.productVariantId
+                product.name = p.title
+                product.quantity = p.quantity
+                product.retailPrice = p.value
+                return product
+            })
+
             return order
         })
+
+    const convertToLocalProduct = (onlineProduct: BloomableProduct): Product => {
+        const product = new Product()
+        product.id = onlineProduct.id
+        product.name = onlineProduct.product.title
+        product.size = onlineProduct.title
+        product.description = onlineProduct.product.description
+        product.guidelines = onlineProduct.component_rates
+            .map(it => `${it.quantity} x ${it.component_rate.component.name} - ${it.component_rate.component.unit.name} (${it.component_rate.component.colour.name})`)
+            .join("\n").trim()
+        if (onlineProduct.product.images.length > 0) {
+            product.image = onlineProduct.product.images[0].url
+        }
+
+        return product
+    }
+
+    const loadOrderProducts = (credentials: Auth.Credentials, order: Order): Promise<any> => {
+        if (order.products == null) return emptyPromise()
+        return Promise.all(order.products?.map(product =>
+            getProduct(credentials, product)
+                .then(it => {
+                    product.name = it.name
+                    product.size = it.size
+                    product.description = it.description
+                    product.guidelines = it.guidelines
+                    product.image = it.image
+                })
+        ))
+    }
 }
