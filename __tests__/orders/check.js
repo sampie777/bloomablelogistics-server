@@ -1,5 +1,5 @@
 import {Orders} from "../../src/orders/orders";
-import {Order, Recipient} from "../../src/bloomable/models";
+import {Order, Recipient} from "../../src/orders/models";
 import {formatDateToWords} from "../../src/utils";
 
 describe("orders check", () => {

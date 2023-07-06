@@ -1,21 +1,31 @@
-import {BloomableScraper} from "../bloomable/scraper";
-import {Order} from "../bloomable/models";
+import {Order} from "./models";
 import {AppClient} from "../appClient";
 import {formatDateToWords, plural, unique} from "../utils";
 import {Auth} from "../auth";
+import {BloomableApi} from "../bloomable/api";
 
 export namespace Orders {
     let knownOrderNumbers: Map<string, number[]> = new Map();
 
-    export const resetKnownOrders = (username: string) => knownOrderNumbers.delete(username)
+    export const resetKnownOrders = (username: string) => knownOrderNumbers.delete(username);
+
+    export const sort = (orders: Order[]): Order[] =>
+        orders
+            .sort((a, b) => (a.number || 0) - (b.number || 0))
+            .reverse();
 
     export const list = (credentials: Auth.Credentials): Promise<Order[]> => {
-        return BloomableScraper.fetchPage(credentials)
-            .then(orders => BloomableScraper.sort(orders))
+        return BloomableApi.getOrders(credentials)
+            .then(orders => sort(orders))
+    }
+
+    export const listNew = (credentials: Auth.Credentials): Promise<Order[]> => {
+        return BloomableApi.getOrders(credentials, "open")
+            .then(orders => sort(orders))
     }
 
     export const newerOrders = (credentials: Auth.Credentials, markAsRead = true): Promise<Order[]> => {
-        return list(credentials)
+        return listNew(credentials)
             .then(orders => orders.filter(it => it.number !== undefined && !it.deleted))
             .then(orders => {
                 console.debug(`${orders.length} orders found for ${credentials.username}`);

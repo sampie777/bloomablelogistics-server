@@ -2,13 +2,7 @@ export class Order {
   id: string | undefined;
   number: number | undefined;
   createdAt: Date | undefined;
-  partner: string = "";
-  clientName: string = "";
-  clientEmail: string | undefined;
-  clientPhones: string[] = [];
   deliverAtDate: Date | undefined;
-  paymentType: string | undefined;
-  florist: string | undefined;
   orderValue: number | undefined;
   orderCosts: number | undefined;
   accepted: boolean = false;
@@ -22,13 +16,7 @@ export class Order {
     to.id = from.id;
     to.number = from.number;
     to.createdAt = from.createdAt;
-    to.partner = from.partner;
-    to.clientName = from.clientName;
-    to.clientEmail = from.clientEmail;
-    to.clientPhones = from.clientPhones;
     to.deliverAtDate = from.deliverAtDate;
-    to.paymentType = from.paymentType;
-    to.florist = from.florist;
     to.orderValue = from.orderValue;
     to.orderCosts = from.orderCosts;
     to.accepted = from.accepted;
@@ -46,6 +34,10 @@ export class Recipient {
   company: string = "";
   unit: string = "";
   address: string = "";
+  coordinates?: {
+    latitude: number,
+    longitude: number,
+  }
   message: string | undefined;
   specialInstructions: string | undefined;
 
@@ -77,9 +69,10 @@ export class ProductExtra {
 }
 
 export class Product {
+  id: number = -1;
   name: string | undefined;
   size: string | undefined;
-  quantity: string | undefined;
+  quantity: number | undefined;
   retailPrice: number | undefined;
   guidelines: string | undefined;
   description: string | undefined;
@@ -88,6 +81,7 @@ export class Product {
 
   static clone(from: Product): Product {
     const to = new Product();
+    to.id = from.id;
     to.name = from.name;
     to.size = from.size;
     to.quantity = from.quantity;

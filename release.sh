@@ -24,8 +24,17 @@ function setVersion() {
     npm --no-git-tag-version --allow-same-version version "${version}" || exit 1
 }
 
-function releasePatch {
+function checkIfCanRelease() {
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  if [ "$branch" != "develop" ]; then
+    echo "You must be on the 'develop' git branch to start a release"
+    exit 1
+  fi
   yarn test || exit 1
+}
+
+function releasePatch {
+  checkIfCanRelease
 
   git checkout master || exit 1
   git pull || exit 1
@@ -42,7 +51,7 @@ function releasePatch {
 }
 
 function releaseMinor {
-  yarn test || exit 1
+  checkIfCanRelease
 
   git checkout master || exit 1
   git pull || exit 1
@@ -58,7 +67,7 @@ function releaseMinor {
 }
 
 function releaseMajor {
-  yarn test || exit 1
+  checkIfCanRelease
 
   git checkout master || exit 1
   git pull || exit 1

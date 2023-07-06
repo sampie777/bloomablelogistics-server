@@ -1,0 +1,135 @@
+{
+  "data": [
+    {
+      "id": "31",
+      "name": "#TST1206",
+      "firstName": "Petrus",
+      "lastName": "Matani Vonlou    0760650000",
+      "phone": "+27700700000",
+      "address1": "1354 Bluetree Street  9999 Magaliesberg Country Estate",
+      "address2": null,
+      "city": "Amandasig",
+      "country": "South Africa",
+      "latitude": -25.0000000,
+      "longitude": 28.0000000,
+      "created_at": "2023-07-05T14:30:40+00:00",
+      "deliveryDate": "2023-07-05T00:00:00+00:00",
+      "lines": [
+        {
+          "id": 289,
+          "title": "Pure Bouquet - Small \/ No",
+          "status": "open",
+          "quantity": 1,
+          "giftMessage": "To Petrus\r\n\r\nPlease accept our condolences on your loss.\r\n\r\nYou are in our thoughts and prayers.\r\n\r\nLove\r\n\r\nYour closest Family",
+          "productVariantId": 347,
+          "value": 525,
+          "returns": []
+        }
+      ],
+      "adjustments": [],
+      "status": "open",
+      "totalValue": 584.95,
+      "deliveryFee": "59.95",
+      "notes": "just a nice mix bunch",
+      "onPay": 453.70000000000005
+    },
+    {
+      "id": "70",
+      "name": "#TST1155",
+      "firstName": "Joris",
+      "lastName": "van 't Voort",
+      "phone": "082 654 9876",
+      "address1": "Fish Eagle Road",
+      "address2": null,
+      "city": "Hartbeespoort",
+      "country": "South Africa",
+      "latitude": -25.7610000,
+      "longitude": 27.8110000,
+      "created_at": "2023-07-04T17:15:53+00:00",
+      "deliveryDate": "2023-07-05T00:00:00+00:00",
+      "lines": [
+        {
+          "id": 225,
+          "title": "Pastel Elegance - Large (As Shown) \/ Yes",
+          "status": "accepted",
+          "quantity": 1,
+          "giftMessage": "",
+          "productVariantId": 586,
+          "value": 1355,
+          "returns": []
+        }
+      ],
+      "adjustments": [],
+      "status": "accepted",
+      "totalValue": 1414.95,
+      "deliveryFee": "59.95",
+      "notes": null,
+      "onPay": 1076.2
+    },
+    {
+      "id": "67",
+      "name": "#TST1150",
+      "firstName": "Andre",
+      "lastName": "Teunis",
+      "phone": "082 000 0000",
+      "address1": "Fish Eagle Road",
+      "address2": "89",
+      "city": "Hartbeespoort",
+      "country": "South Africa",
+      "latitude": -25.0000000,
+      "longitude": 27.0000000,
+      "created_at": "2023-07-04T17:15:53+00:00",
+      "deliveryDate": "2023-07-05T00:00:00+00:00",
+      "lines": [
+        {
+          "id": 225,
+          "title": "Pastel Elegance - Large (As Shown) \/ Yes",
+          "status": "delivered",
+          "quantity": 1,
+          "giftMessage": "",
+          "productVariantId": 586,
+          "value": 1355,
+          "returns": []
+        }
+      ],
+      "adjustments": [],
+      "status": "delivered",
+      "totalValue": 1414.95,
+      "deliveryFee": "59.95",
+      "notes": null,
+      "onPay": 1076.2
+    }
+  ],
+  "links": {
+    "first": "http:\/\/localhost:1999\/api\/orders?page=1",
+    "last": "http:\/\/localhost:1999\/api\/orders?page=1",
+    "prev": null,
+    "next": null
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 1,
+    "links": [
+      {
+        "url": null,
+        "label": "&laquo; Previous",
+        "active": false
+      },
+      {
+        "url": "http:\/\/localhost:1999\/api\/orders?page=1",
+        "label": "1",
+        "active": true
+      },
+      {
+        "url": null,
+        "label": "Next &raquo;",
+        "active": false
+      }
+    ],
+    "path": "http:\/\/localhost:1999\/api\/orders",
+    "per_page": 15,
+    "to": 3,
+    "total": 3
+  }
+}

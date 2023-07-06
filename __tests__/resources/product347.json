@@ -1,0 +1,257 @@
+{
+  "data": {
+    "id": 347,
+    "title": "Small \/ No",
+    "product": {
+      "id": 96,
+      "title": "Pure Bouquet",
+      "slug": "pure-bouquet",
+      "description": "<meta charset=\"utf-8\">\n<p><strong>A pure white and green bouquet perfect for sympathy occasions or for someone in your life that loves classic white flowers. \u00a0<\/strong><\/p>\n<p>Flowers included in this beautiful creation may differ subject to seasonal and flower market availability. Our team will inform you if there are any major changes but we will do our best to ensure that it looks like what you see on our website.<\/p>\n<p><span>Thank you for supporting local South African florists. #SupportLocal<\/span><\/p>",
+      "images": [
+        {
+          "id": 92,
+          "altText": null,
+          "height": 600,
+          "width": 450,
+          "url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0686\/5315\/4621\/products\/f6ff736f-ae29-406b-ba0e-1d1406a0fd42.jpg?v=1687248191"
+        }
+      ],
+      "variants": [
+        {
+          "id": 347,
+          "title": "Small \/ No",
+          "sku": "0085S"
+        },
+        {
+          "id": 349,
+          "title": "Medium (As Shown) \/ No",
+          "sku": "0085M"
+        },
+        {
+          "id": 348,
+          "title": "Small \/ Yes",
+          "sku": "0085S-V"
+        },
+        {
+          "id": 354,
+          "title": "Extra Large \/ Yes",
+          "sku": "0085XL-V"
+        },
+        {
+          "id": 350,
+          "title": "Medium (As Shown) \/ Yes",
+          "sku": "0085M-V"
+        },
+        {
+          "id": 351,
+          "title": "Large \/ No",
+          "sku": "0085L"
+        },
+        {
+          "id": 352,
+          "title": "Large \/ Yes",
+          "sku": "0085L-V"
+        },
+        {
+          "id": 353,
+          "title": "Extra Large \/ No",
+          "sku": "0085XL"
+        }
+      ]
+    },
+    "component_rates": [
+      {
+        "id": 4281,
+        "quantity": 1,
+        "component_rate": {
+          "id": 213,
+          "component": {
+            "id": 269,
+            "name": "Additional Delivery fee",
+            "slug": "additional-delivery-fee",
+            "container": false,
+            "exclude_auto_calculations": true,
+            "show_on_menu": true,
+            "unit": {
+              "id": 6,
+              "name": "1 Single"
+            },
+            "colour": {
+              "id": 2,
+              "name": "Clear"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 4282,
+        "quantity": 4,
+        "component_rate": {
+          "id": 335,
+          "component": {
+            "id": 276,
+            "name": "White Chrysanthemums",
+            "slug": "white-chrysanthemums",
+            "container": false,
+            "exclude_auto_calculations": true,
+            "show_on_menu": true,
+            "unit": {
+              "id": 6,
+              "name": "1 Single"
+            },
+            "colour": {
+              "id": 3,
+              "name": "White"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 4283,
+        "quantity": 1,
+        "component_rate": {
+          "id": 127,
+          "component": {
+            "id": 95,
+            "name": "Kraft Paper",
+            "slug": "kraft-paper",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 17,
+              "name": "Brown"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 4284,
+        "quantity": 4,
+        "component_rate": {
+          "id": 101,
+          "component": {
+            "id": 70,
+            "name": "White Gerbera",
+            "slug": "white-gerbera",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 3,
+              "name": "White"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 4285,
+        "quantity": 6,
+        "component_rate": {
+          "id": 116,
+          "component": {
+            "id": 84,
+            "name": "Greenery",
+            "slug": "greenery",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 23,
+              "name": "Green"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 4287,
+        "quantity": 1,
+        "component_rate": {
+          "id": 224,
+          "component": {
+            "id": 240,
+            "name": "Twyne",
+            "slug": "twyne",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 17,
+              "name": "Brown"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 4288,
+        "quantity": 5,
+        "component_rate": {
+          "id": 206,
+          "component": {
+            "id": 187,
+            "name": "White Roses",
+            "slug": "white-roses",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 3,
+              "name": "White"
+            },
+            "hasImage": false
+          }
+        }
+      },
+      {
+        "id": 4289,
+        "quantity": 2,
+        "component_rate": {
+          "id": 212,
+          "component": {
+            "id": 255,
+            "name": "Wax White",
+            "slug": "wax-white",
+            "container": false,
+            "exclude_auto_calculations": false,
+            "show_on_menu": true,
+            "unit": {
+              "id": 4,
+              "name": "1 Stem (Single Bud)"
+            },
+            "colour": {
+              "id": 3,
+              "name": "White"
+            },
+            "hasImage": false
+          }
+        }
+      }
+    ]
+  }
+}

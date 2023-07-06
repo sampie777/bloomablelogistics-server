@@ -1,3 +1,7 @@
+import * as dotenv from "dotenv";
+
+dotenv.config({ path: './.env' });
+
 const mockFetch = jest.fn(() => Promise.resolve({
     ok: true,
     status: 200,

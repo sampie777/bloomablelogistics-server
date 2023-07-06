@@ -12,9 +12,17 @@ export namespace AppClient {
         }
     }
 
+    // See https://firebase.google.com/docs/cloud-messaging/send-message#send-messages-to-topics-legacy
+    export const convertUsernameToTopicName = (value: string): string => {
+        return value
+            .replace(/[\s\n\r]*/g, "")
+            .replace(/[^a-zA-Z0-9-_.~%]+/g, "-")
+    };
+
     export const sendNotification = (toUsername: string, title: string, message: string) => {
+        const topic = convertUsernameToTopicName(toUsername)
         const notification = {
-            to: `/topics/${toUsername}`,
+            to: `/topics/${topic}`,
             notification: {
                 title: title,
                 body: message,
@@ -23,8 +31,8 @@ export namespace AppClient {
 
         console.info("Sending notification", notification)
 
-        if (toUsername == "demo") {
-            console.log("Not sending notification to demo users.");
+        if (toUsername == "demo" || process.env.NODE_ENV === "develop") {
+            console.log("Not sending notification to demo users or in develop environment.");
             return emptyPromise()
         }
         return api.fcm.notification.send(notification)
