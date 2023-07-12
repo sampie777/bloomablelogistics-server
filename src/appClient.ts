@@ -17,6 +17,7 @@ export namespace AppClient {
         return value
             .replace(/[\s\n\r]*/g, "")
             .replace(/[^a-zA-Z0-9-_.~%]+/g, "-")
+            .toLowerCase();
     };
 
     export const sendNotification = (toUsername: string, title: string, message: string) => {

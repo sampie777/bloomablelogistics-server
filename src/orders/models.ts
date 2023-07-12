@@ -1,15 +1,15 @@
 export class Order {
-  id: string | undefined;
-  number: number | undefined;
-  createdAt: Date | undefined;
-  deliverAtDate: Date | undefined;
-  orderValue: number | undefined;
-  orderCosts: number | undefined;
+  id?: string = undefined;
+  number?: number = undefined;
+  createdAt?: Date = undefined;
+  deliverAtDate?: Date = undefined;
+  orderValue?: number = undefined;
+  orderCosts?: number = undefined;
   accepted: boolean = false;
   delivered: boolean = false;
   deleted: boolean = false;
-  recipient: Recipient | null | undefined;  // null when recipient not available, undefined when recipient not yet fetched
-  products: Product[] | undefined;
+  recipient?: Recipient = undefined;
+  products: Product[] = [];
 
   static clone(from: Order): Order {
     const to = new Order();
@@ -23,7 +23,7 @@ export class Order {
     to.delivered = from.delivered;
     to.deleted = from.deleted;
     to.recipient = from.recipient ? Recipient.clone(from.recipient) : from.recipient;
-    to.products = from.products?.map(it => Product.clone(it));
+    to.products = from.products.map(it => Product.clone(it));
     return to;
   }
 }
@@ -37,9 +37,9 @@ export class Recipient {
   coordinates?: {
     latitude: number,
     longitude: number,
-  }
-  message: string | undefined;
-  specialInstructions: string | undefined;
+  } = undefined;
+  message?: string = undefined;
+  specialInstructions?: string = undefined;
 
   static clone(from: Recipient): Recipient {
     const to = new Recipient();
@@ -55,9 +55,9 @@ export class Recipient {
 }
 
 export class ProductExtra {
-  name: string | undefined;
-  description: string | undefined;
-  image: string | undefined;
+  name?: string = undefined;
+  description?: string = undefined;
+  image?: string = undefined;
 
   static clone(from: ProductExtra): ProductExtra {
     const to = new ProductExtra();
@@ -70,14 +70,14 @@ export class ProductExtra {
 
 export class Product {
   id: number = -1;
-  name: string | undefined;
-  size: string | undefined;
-  quantity: number | undefined;
-  retailPrice: number | undefined;
-  guidelines: string | undefined;
-  description: string | undefined;
-  image: string | undefined;
-  extras: ProductExtra[] | undefined;
+  name?: string = undefined;
+  size?: string = undefined;
+  quantity?: number = undefined;
+  retailPrice?: number = undefined;
+  guidelines?: string = undefined;
+  description?: string = undefined;
+  image?: string = undefined;
+  extras?: ProductExtra[] = undefined;
 
   static clone(from: Product): Product {
     const to = new Product();

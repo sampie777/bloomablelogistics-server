@@ -56,8 +56,7 @@ export namespace BloomableApi {
             })
             .then(response => {
                 if (response.status != 200) {
-                    console.log("Order accept status", response.status)
-                    throw new Error("Failed to accept order")
+                    throw new Error(`Failed to accept order (status=${response.status})`)
                 }
             })
             .catch(e => {
