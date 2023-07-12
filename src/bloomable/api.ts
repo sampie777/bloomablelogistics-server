@@ -17,8 +17,13 @@ export namespace BloomableApi {
                     "Referer": "https://dashboard.bloomable.com/dashboard",
                 }
             })
-            .then(response => response.json() as Promise<OrdersResponse>)
-            .then(json => convertToLocalOrder(json.data))
+            .then(response => response.json() as Promise<OrdersResponse | undefined>)
+            .then(json => {
+                if (json === undefined || !Array.isArray(json)) {
+                    throw new Error(`Response for getOrders is not the expected array but '${JSON.stringify(json)}'`)
+                }
+                return convertToLocalOrder(json.data)
+            })
             .catch(e => {
                 console.error("Could not get orders", {error: e})
                 throw e
