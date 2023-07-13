@@ -8,7 +8,7 @@ export class Order {
   accepted: boolean = false;
   delivered: boolean = false;
   deleted: boolean = false;
-  recipient?: Recipient = undefined;
+  recipient: Recipient = new Recipient();
   products: Product[] = [];
 
   static clone(from: Order): Order {
@@ -79,6 +79,8 @@ export class Product {
   image?: string = undefined;
   extras?: ProductExtra[] = undefined;
 
+  _detailsLoaded: boolean = false;
+
   static clone(from: Product): Product {
     const to = new Product();
     to.id = from.id;
@@ -90,6 +92,8 @@ export class Product {
     to.description = from.description;
     to.image = from.image;
     to.extras = from.extras?.map(it => ProductExtra.clone(it));
+
+    to._detailsLoaded = from._detailsLoaded;
     return to;
   }
 }

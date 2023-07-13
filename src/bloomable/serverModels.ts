@@ -48,7 +48,7 @@ export interface BloomableProduct {
 }
 
 export interface ProductResponse {
-    data: BloomableProduct
+    data: BloomableProduct;
 }
 
 export interface BloomableOrder {
@@ -56,9 +56,11 @@ export interface BloomableOrder {
     name: string,
     firstName: string,
     lastName: string,
-    phone: string,
+    company: string | null,
+    phone: string | null,
     address1: string,
     address2: string | null,
+    postalCode: string | null,
     city: string,
     country: string,
     latitude: number,
@@ -77,10 +79,10 @@ export interface BloomableOrder {
     }>,
     adjustments: [],
     status: OrderStatus,
-    totalValue: number,
-    deliveryFee: string,
     notes: string | null,
+    totalValue: number,
     onPay: number,
+    deliveryFee: string,
 }
 
 export interface OrdersResponse {
@@ -105,6 +107,10 @@ export interface OrdersResponse {
         to: number | null,
         total: number
     }
+}
+
+export interface OrderResponse {
+    data: BloomableOrder;
 }
 
 export interface MeResponseCity {
@@ -165,5 +171,5 @@ export interface MeResponse {
         },
         isAdmin: boolean,
         enabled: boolean,
-    }
+    };
 }
