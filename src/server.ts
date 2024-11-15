@@ -58,6 +58,8 @@ export namespace Server {
             const from = `${request.ip}${username ? ` (user=${username})` : ''}`;
             const to = `${request.hostname}${request.url}`;
 
+	    if (to === "/api/v1/health") return next();
+
             console.log(`${(new Date()).toISOString()} [REQUEST] ${request.method} - ${from} -> ${to}`)
             next();
         })

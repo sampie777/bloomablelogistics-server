@@ -30,7 +30,7 @@ export namespace AppClient {
 
         console.info("Sending notification", notification)
 
-        if (toUsername == "demo" || process.env.NODE_ENV === "develop") {
+        if (toUsername == "demo" || process.env.NODE_ENV === "develop" || process.env.NODE_ENV === "development") {
             console.log("Not sending notification to demo users or in develop environment.");
             return emptyPromise()
         }
