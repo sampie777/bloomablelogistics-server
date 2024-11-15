@@ -104,6 +104,17 @@ export namespace Server {
                 .then(orders => response.json(orders))
                 .catch(e => next(e))
         })
+        app.post("/api/v1/notify", (request, response, next) => {
+            const credentials = Auth.getBasicAuth(request)
+            const title = getQueryParameterAsString(request, "title", "");
+            const message = getQueryParameterAsString(request, "message", "");
+
+            Validation.validate(title.trim().length > 0 || message.trim().length > 0, "Cannot send an empty message")
+
+            AppClient.sendNotification(credentials.username, title, message)
+              .then(r => response.json(r))
+              .catch(e => next(e));
+        });
 
         app.use(errorHandler)
     }
