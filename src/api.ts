@@ -1,5 +1,4 @@
 import fetch, {Response} from "node-fetch";
-import config from "./config";
 import {rollbar} from "./rollbar";
 import {HttpCode, HttpError} from "./http";
 
@@ -28,19 +27,20 @@ export const throwErrorsIfNotOk = (response: Response) => {
 };
 
 export const api = {
-    fcm: {  // Firebase Cloud Messaging
+    fcm: {  // Firebase
         notification: {
-            send: (data: {
-                to: string,
-                notification: { title: string, body: string }
-            }) => fetch(`https://fcm.googleapis.com/fcm/send`, {
-                method: "POST",
+            send: (notification: {
+                topic: string,
+                title: string,
+                body: string
+            }) => fetch(`https://sendnotification-6ab6nqvgna-uc.a.run.app`, {
+              method: "POST",
                 headers: {
-                    "Authorization": `key=${config.fcm.key}`,
-                    "content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(notification)
             })
         }
     }
-}
+};
