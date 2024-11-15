@@ -40,3 +40,8 @@ And even load the credentials from a separate file and setup a system logger:
 */5 5-20 * * * . /home/<user>/bloomable_secrets.txt; curl http://$BLOOMABLE_USERNAME:$BLOOMABLE_PASSWORD@localhost:3000/api/v1/orders/check | /usr/bin/logger -t bloomable_logistics
 0 3,4,21,22,23 * * * . /home/<user>/bloomable_secrets.txt; curl http://$BLOOMABLE_USERNAME:$BLOOMABLE_PASSWORD@localhost:3000/api/v1/orders/check | /usr/bin/logger -t bloomable_logistics
 ```
+
+
+## Notifications
+
+Notifications are send using Google's Cloud Functions. By sending our notification to our Cloud Function, that function will send it through Firebase Cloud Messaging to the app clients.
