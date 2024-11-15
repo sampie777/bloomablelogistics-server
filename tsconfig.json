@@ -120,5 +120,5 @@
     "skipLibCheck": true
     /* Skip type checking all .d.ts files. */
   },
-  "exclude": ["static"]
+  "exclude": ["static", "functions"]
 }
